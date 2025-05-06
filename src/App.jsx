@@ -11,12 +11,6 @@ function App() {
       <Header />
       <div className="flex flex-wrap justify-start-center">
         <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
       </div>
     </div>
   )
