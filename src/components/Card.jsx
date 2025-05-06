@@ -1,4 +1,5 @@
-
+import Button from "./Button.jsx";
+import { Clover } from 'lucide-react';
 
 function Card() {
 
@@ -14,4 +15,4 @@ function Card() {
       )
 }
 
-export default Card
+export default Card;
