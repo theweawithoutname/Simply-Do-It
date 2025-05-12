@@ -15,14 +15,15 @@ function App() {
     setCards([...cards, { id: newId }]);
   };
 
+  const deleteCard = (idToDelete) => {
+    setCards(cards.filter((card) => card.id !== idToDelete));
+  }
+
   return (
     <div>
       <Header />
       <div className="flex flex-wrap justify-start-center">
-        {/* Mapear todas las Cards */}
-        {cards.map((card) => (<Card key={card.id} />))}
-        
-        {/* Botón para agregar nuevas Cards */}
+        {cards.map((card) => (<Card key={card.id} id={card.id} onDelete={deleteCard} />))}
         <Button
           className="mt-[30px]"
           startIcon={<Plus size={20} color="lime" />}

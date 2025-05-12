@@ -2,7 +2,7 @@
 import { Plus, Trash, EllipsisVertical } from "lucide-react";
 import Button from "./Button.jsx";
 
-function Card() {
+function Card({id, onDelete}) {
   return (
     <div className="m-[30px] mr-[15px] p-0">
       <div className="items-center bg-yellow-600 shadow-md rounded min-w-[250px] max-w-[300px] h-[300px]">
@@ -10,9 +10,8 @@ function Card() {
         <div className="flex justify-between items-start p-[5px]"> {/* Added padding for spacing */}
           {/* Contenedor para los botones Plus y Trash (lado izquierdo) */}
           <div className="flex">
-            <Button startIcon={<Trash size={24} color="red" />} />
+            <Button startIcon={<Trash size={24} color="red" />} onClick={() => onDelete(id)}/>
           </div>
-          {/* Contenedor para el botón Ellipsis (lado derecho) */}
           <div>
             <Button startIcon={<EllipsisVertical size={24} />} />
           </div>
@@ -28,3 +27,4 @@ function Card() {
 }
 
 export default Card;
+
