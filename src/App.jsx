@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { DndContext } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import "./global.css"
 import Header from "./components/header/header"
 import Card from "./components/Card"
@@ -39,29 +41,42 @@ function App() {
     setCards(updatedCards);
   };
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
 
+    if (over && active.id !== over.id) {
+      setCards((cards) => {
+        const oldIndex = cards.findIndex((card) => card.id === active.id);
+        const newIndex = cards.findIndex((card) => card.id === over.id);
+        return arrayMove(cards, oldIndex, newIndex);
+      });
+    }
+  };
 
   return (
-    <div>
-      <Header />
-      <div className="flex flex-wrap justify-start-center">
-        {cards.map((card) => (
-          <Card 
-            key={card.id} 
-            id={card.id} 
-            title={card.title}
-            text={card.text}
-            onDelete={deleteCard}
-            onTextChange={updateCardText}
-            onTitleChange={updateCardTitle}/>
-          ))}
-        <Button
-          className="mt-[30px]"
-          startIcon={<Plus size={20} color="lime" />}
-          onClick={addCard}
-        />
+    <DndContext onDragEnd={handleDragEnd}>
+      <div>
+        <Header />
+        <div className="flex flex-wrap justify-start-center">
+          <SortableContext items={cards.map(card => card.id)} strategy={verticalListSortingStrategy}>
+            {cards.map((card) => (
+              <Card
+                key={card.id}
+                id={card.id}
+                title={card.title}
+                text={card.text}
+                onDelete={deleteCard}
+                onTextChange={updateCardText}
+                onTitleChange={updateCardTitle} />
+            ))}
+          </SortableContext>
+          <Button
+            className="mt-[30px]"
+            startIcon={<Plus size={20} color="lime" />}
+            onClick={addCard} />
+        </div>
       </div>
-    </div>
+    </DndContext>
   );
 }
 
